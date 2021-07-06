@@ -1,0 +1,35 @@
+$font-family: -apple-system, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+:root {
+    --text-color: rgb(0, 0, 0);
+    --preview-text-color: rgb(255, 255, 255);
+    --cover-color: rgba(10, 10, 10, 0.5);
+    --link-color: #4aaadc;
+
+    font-family: $font-family;
+
+    @media (min-width: 48em) {
+        font-size: calc(1rem + ((1vw - 0.48rem) * 1.3889));
+    }
+
+    @media (min-width: 120em) {
+        font-size: 2rem;
+    }
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.section-title {
+    margin-top: 0;
+    font-size: 2em;
+    font-weight: 600;
+}

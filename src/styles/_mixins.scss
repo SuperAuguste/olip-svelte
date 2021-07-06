@@ -1,0 +1,4 @@
+@mixin font-weight($weight) {
+    font-weight: $weight;
+    font-variation-settings: "wght" $weight;
+}
