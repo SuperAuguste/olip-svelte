@@ -2,10 +2,16 @@
     import * as api from "$lib/api";
     import * as process from "$lib/api/process";
     import Cards from "$lib/Cards.svelte";
+    import { onMount } from "svelte";
 
-    const applications = api.listApplications({
-        current_state: null,
-        visible: true,
+    let resolveApplications;
+    const applications: Promise<api.Application[]> = new Promise(resolve => {resolveApplications = resolve;});
+
+    onMount(async () => {
+        resolveApplications(await api.listApplications({
+            current_state: null,
+            visible: true,
+        }));
     });
 </script>
 

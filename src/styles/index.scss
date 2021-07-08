@@ -8,13 +8,14 @@ $font-family: -apple-system, Helvetica Neue, Helvetica, Arial, sans-serif;
 
     font-family: $font-family;
 
-    @media (min-width: 48em) {
-        font-size: calc(1rem + ((1vw - 0.48rem) * 1.3889));
-    }
+    // @media (min-width: 48em) {
+    //     font-size: calc(1rem + ((1vw - 0.48rem) * 1.3889));
+    // }
 
-    @media (min-width: 120em) {
-        font-size: 2rem;
-    }
+    // @media (min-width: 120em) {
+    //     font-size: 2rem;
+    // }
+    font-size: 1.75rem;
 }
 
 html,
@@ -32,4 +33,43 @@ body {
     margin-top: 0;
     font-size: 2em;
     font-weight: 600;
+}
+
+button {
+    border: none;
+    border-radius: 3px;
+
+    padding: 0.6em 2.8em;
+
+    color: white;
+    font-size: 1em;
+    font-weight: 900;
+    text-align: center;
+    font-family: $font-family;
+
+    cursor: pointer;
+    transition: 0.2s background-color ease-in-out;
+    background-color: black;
+
+    &:hover {
+        background-color: rgb(40, 40, 40);
+    }
+}
+
+input {
+    border: 2px solid black;
+    border-radius: 3px;
+
+    padding: 0.6em 0.8em;
+
+    color: black;
+    font-size: 1em;
+    font-family: $font-family;
+    font-weight: 700;
+
+    outline: none;
+
+    &::placeholder {
+        color: rgb(85, 85, 85);
+    }
 }

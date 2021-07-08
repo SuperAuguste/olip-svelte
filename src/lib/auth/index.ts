@@ -1,6 +1,9 @@
 import { get, writable } from "svelte/store";
 import * as config from "$lib/config.json";
-import { Profile, UserManager, UserManagerSettings } from "oidc-client";
+
+import oidc from "oidc-client";
+import type { UserManager, Profile, UserManagerSettings } from "oidc-client";
+
 import axios from "axios";
 
 export class Auth {
@@ -26,7 +29,7 @@ export class Auth {
     }
 
     async onMount() {
-        this.userManager = new UserManager(this.settings);
+        this.userManager = new oidc.UserManager(this.settings);
         this.userManager.events.addUserLoaded(user => {
             this.isAuthenticated.set(true);
             this.accessToken.set(user.access_token);
@@ -74,14 +77,13 @@ export class Auth {
         try {
             await this.userManager.signinSilent();
             return true;
-        }
-        catch (e) {
-            this.authError = e.message;
+        } catch (error) {
+            this.authError = error.message;
             return false;
         }
     }
 
-    async login(preserveRoute = true, callbackUrl = null) {
+    async login(preserveRoute: boolean = true, callbackUrl: string = null) {
         const redirect_uri = callbackUrl || window.location.href;
         const appState = preserveRoute
             ? {
@@ -92,7 +94,7 @@ export class Auth {
         await this.userManager.signinRedirect({ redirect_uri, appState });
     }
 
-    async logout(logoutUrl) {
+    async logout(logoutUrl: string = null) {
         const returnTo = logoutUrl || window.location.href;
         
         this.userManager.signoutRedirect({ post_logout_redirect_uri: returnTo });

@@ -1,3 +1,16 @@
+<script context="module">
+	/**
+	 * @type {import('@sveltejs/kit').Load}
+	 */
+	export async function load({ page, fetch, session, context }) {
+		return {
+            props: {
+                navPath: page.path
+            }
+		}
+	}
+</script>
+
 <script>
     import "../styles/index.scss";
     import Nav from "$lib/Nav.svelte";
@@ -8,10 +21,12 @@
     onMount(async () => {
         await auth.onMount();
     });
+
+    export let navPath;
 </script>
 
 <div>
-    <Nav />
+    <Nav path={navPath} />
     <main>
         <slot />
     </main>

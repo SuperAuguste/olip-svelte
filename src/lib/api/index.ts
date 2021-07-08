@@ -42,6 +42,167 @@ export interface Application {
     weight: string,
 }
 
+export interface Label {
+    ab?: string,
+    aa?: string,
+    af?: string,
+    sq?: string,
+    am?: string,
+    ar?: string,
+    hy?: string,
+    as?: string,
+    ay?: string,
+    az?: string,
+    ba?: string,
+    eu?: string,
+    bn?: string,
+    dz?: string,
+    bh?: string,
+    bi?: string,
+    br?: string,
+    bg?: string,
+    my?: string,
+    be?: string,
+    km?: string,
+    ca?: string,
+    zh?: string,
+    co?: string,
+    hr?: string,
+    cs?: string,
+    da?: string,
+    nl?: string,
+    en?: string,
+    eo?: string,
+    et?: string,
+    fo?: string,
+    fj?: string,
+    fi?: string,
+    fr?: string,
+    fy?: string,
+    gd?: string,
+    gl?: string,
+    ka?: string,
+    de?: string,
+    el?: string,
+    kl?: string,
+    gn?: string,
+    gu?: string,
+    ha?: string,
+    iw?: string,
+    hi?: string,
+    hu?: string,
+    is?: string,
+    in?: string,
+    ia?: string,
+    ie?: string,
+    ik?: string,
+    ga?: string,
+    it?: string,
+    ja?: string,
+    jw?: string,
+    kn?: string,
+    ks?: string,
+    kk?: string,
+    rw?: string,
+    ky?: string,
+    rn?: string,
+    ko?: string,
+    ku?: string,
+    lo?: string,
+    la?: string,
+    lv?: string,
+    ln?: string,
+    lt?: string,
+    mk?: string,
+    mg?: string,
+    ms?: string,
+    ml?: string,
+    mt?: string,
+    mi?: string,
+    mr?: string,
+    mo?: string,
+    mn?: string,
+    na?: string,
+    ne?: string,
+    no?: string,
+    oc?: string,
+    or?: string,
+    om?: string,
+    ps?: string,
+    fa?: string,
+    pl?: string,
+    pt?: string,
+    pa?: string,
+    qu?: string,
+    rm?: string,
+    ro?: string,
+    ru?: string,
+    sm?: string,
+    sg?: string,
+    sa?: string,
+    sr?: string,
+    sh?: string,
+    st?: string,
+    tn?: string,
+    sn?: string,
+    sd?: string,
+    si?: string,
+    ss?: string,
+    sk?: string,
+    sl?: string,
+    so?: string,
+    es?: string,
+    su?: string,
+    sw?: string,
+    sv?: string,
+    tl?: string,
+    tg?: string,
+    ta?: string,
+    tt?: string,
+    te?: string,
+    th?: string,
+    bo?: string,
+    ti?: string,
+    to?: string,
+    ts?: string,
+    tr?: string,
+    tk?: string,
+    tw?: string,
+    uk?: string,
+    ur?: string,
+    uz?: string,
+    vi?: string,
+    vo?: string,
+    cy?: string,
+    wo?: string,
+    xh?: string,
+    ji?: string,
+    yo?: string,
+    zu?: string,
+}
+
+export interface CategoryListing {
+    id: number,
+    labels: Label,
+    links: Link[],
+    tags: string[]
+}
+
+export interface Content {
+    bundle: string,
+    content_id: string
+}
+
+export interface Category {
+    applications: string[],
+    contents: Content[],
+    id: number,
+    labels: Label,
+    links: Link[],
+    playlists: number[],
+    tags: string[]
+}
+
 async function listApplications(options: {
     /**
      * Specify whether to list uninstalled, downloaded, or installed applications
@@ -60,9 +221,7 @@ async function listApplications(options: {
     current_state: null,
     visible: null,
     repository_update: false,
-}) : Promise<{
-    data: Application[],
-}> {
+}) : Promise<Application[]> {
     let url = new URL(config.api_url + "/applications/");
 
     if (options.current_state)
@@ -153,7 +312,7 @@ async function listTerms() {
     return req.data.data;
 }
 
-async function listCategories() {
+async function listCategories(): Promise<CategoryListing[]> {
     let req = await axios.get(config.api_url + "/categories/");
     return req.data.data;
 }
@@ -163,8 +322,14 @@ async function createCategory(data) {
     return req.data;
 }
 
-async function updateCategory(categoryUrl, data) {
-    let req = await axios.put(categoryUrl, data);
+async function updateCategory(categoryId: string | number, data: Category): Promise<Category> {
+    const copiedData = {...data};
+    delete copiedData.id;
+
+    if (!copiedData.contents) copiedData.contents = [];
+    if (!copiedData.directLinks) copiedData.directLinks = [];
+
+    let req = await axios.put(`${config.api_url}/categories/${categoryId}`, copiedData);
 
     return req.data;
 }
@@ -181,8 +346,8 @@ async function updateThumbnail(categoryThumbnailUrl, contentType, contentLength,
     });
 }
 
-async function getCategory(categoryUrl) {
-    let req = await axios.get(categoryUrl);
+async function getCategory(categoryId: string | number): Promise<Category> {
+    let req = await axios.get(`${config.api_url}/categories/${categoryId}`);
 
     return req.data;
 }
