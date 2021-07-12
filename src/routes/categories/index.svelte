@@ -1,6 +1,5 @@
 <script lang="ts">
-import { goto } from "$app/navigation";
-
+    import { goto } from "$app/navigation";
     import * as api from "$lib/api";
     import * as process from "$lib/api/process";
     import Cards from "$lib/Cards.svelte";
@@ -15,7 +14,10 @@ import { goto } from "$app/navigation";
 </script>
 
 <div>
-    <h2 class="section-title">Categories</h2>
+    <header>
+        <h2 class="section-title">Categories</h2>
+        <a href="/categories/new/edit">New Category</a>
+    </header>
 
     {#await categories}
         <p>Loading...</p>

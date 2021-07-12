@@ -188,6 +188,18 @@ export interface CategoryListing {
     tags: string[]
 }
 
+export interface UserStub {
+    name: string,
+    url: string,
+}
+
+export interface PlaylistListing {
+    id: number,
+    links: Link[],
+    title: string,
+    user: UserStub
+}
+
 export interface Content {
     bundle: string,
     content_id: string
@@ -397,7 +409,7 @@ async function getPlaylist(playlistUrl) {
     return req.data;
 }
 
-async function listPlaylists(categoryId, visibleForUser) {
+async function listPlaylists(categoryId?, visibleForUser?): Promise<PlaylistListing[]> {
     let url = new URL(config.api_url + "/playlists/");
 
     if (categoryId)

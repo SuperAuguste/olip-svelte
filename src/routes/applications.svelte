@@ -16,7 +16,9 @@
 </script>
 
 <div>
-    <h2 class="section-title">Content</h2>
+    <header>
+        <h2 class="section-title">Content</h2>
+    </header>
 
     {#await applications}
         <p>Loading...</p>

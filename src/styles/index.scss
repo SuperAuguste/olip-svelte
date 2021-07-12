@@ -29,13 +29,30 @@ body {
     box-sizing: border-box;
 }
 
-.section-title {
-    margin-top: 0;
-    font-size: 2em;
-    font-weight: 600;
+header {
+    display: flex;
+    margin-bottom: 0.83em;
+
+    flex-direction: row;
+
+    align-items: center;
+    justify-content: space-between;
+
+    .section-title {
+        margin-top: 0;
+        margin-bottom: 0;
+
+        font-size: 2em;
+        font-weight: 600;
+    }
 }
 
-button {
+button,
+.btn,
+input[type="submit"] {
+    --button-background-color: black;
+    --button-background-color--hover: rgb(40, 40, 40);
+
     border: none;
     border-radius: 3px;
 
@@ -49,10 +66,15 @@ button {
 
     cursor: pointer;
     transition: 0.2s background-color ease-in-out;
-    background-color: black;
+    background-color: var(--button-background-color);
 
     &:hover {
-        background-color: rgb(40, 40, 40);
+        background-color: var(--button-background-color--hover);
+    }
+
+    &.secondary {
+        --button-background-color: rgb(80, 80, 80);
+        --button-background-color--hover: rgb(120, 120, 120);
     }
 }
 
@@ -71,5 +93,19 @@ input {
 
     &::placeholder {
         color: rgb(85, 85, 85);
+    }
+}
+
+.input-group {
+    margin-bottom: 0.8em;
+
+    & > *:first-child {
+        display: block;
+
+        margin-bottom: 0.2em;
+    }
+
+    & > *:last-child {
+        display: block;
     }
 }
