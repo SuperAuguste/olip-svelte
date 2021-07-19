@@ -2,6 +2,8 @@
     import * as api from "$lib/api";
     import * as process from "$lib/api/process";
     import Cards from "$lib/Cards.svelte";
+
+    import LinearProgress from "@smui/linear-progress";
     
     function processResolved(resolved: [api.Application[], any, any]) {
         return [
@@ -23,7 +25,7 @@
     </header>
 
     {#await Promise.all(loads)}
-        <p>Loading...</p>
+        <LinearProgress indeterminate />
     {:then resolved}
         <Cards
             cards={processResolved(resolved)}
