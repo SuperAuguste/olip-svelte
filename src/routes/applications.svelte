@@ -1,7 +1,6 @@
 <script lang="ts">
     import * as api from "$lib/api";
-    import * as process from "$lib/api/process";
-    import Cards from "$lib/Cards.svelte";
+    import * as process from "$lib/api/process";    
     import { onMount } from "svelte";
 
     let resolveApplications;
@@ -23,14 +22,22 @@
     {#await applications}
         <p>Loading...</p>
     {:then resolved}
-        <Cards
+        <!-- <Cards
             cards={resolved.map(process.cardifyApplication)}
-        />
+        /> -->
+        
     {/await}
 </div>
 
 <style type="text/scss">
-    div {
-        padding: 2rem;
+    .cell-content {
+        // height: 300px;
+    }
+
+    :global(.applications-card-media) {
+        --cover-color: rgba(0, 0, 0, 0.75);
+        background: linear-gradient(var(--cover-color), var(--cover-color)), var(--background-url);
+        background-position: center;
+        background-size: cover;
     }
 </style>

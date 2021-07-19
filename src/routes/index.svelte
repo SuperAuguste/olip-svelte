@@ -1,5 +1,4 @@
 <script lang="ts">
-    import "../styles/index.scss";
     import * as api from "$lib/api";
     import * as process from "$lib/api/process";
     import Cards from "$lib/Cards.svelte";
@@ -20,7 +19,7 @@
 
 <div>
     <header>
-        <h2 class="section-title">Content</h2>
+        <h2 class="mdc-typography--headline4">Content</h2>
     </header>
 
     {#await Promise.all(loads)}
@@ -33,7 +32,5 @@
 </div>
 
 <style type="text/scss">
-    div {
-        padding: 2rem;
-    }
+    
 </style>

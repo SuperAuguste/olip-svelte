@@ -4,7 +4,10 @@
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
-    "preview": "svelte-kit preview"
+    "preview": "svelte-kit preview",
+    "vite-workaround": "node _helper/vite-workaround.js",
+    "smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
+    "smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
   },
   "devDependencies": {
     "@sveltejs/kit": "next",
@@ -15,7 +18,18 @@
   },
   "type": "module",
   "dependencies": {
+    "@material/theme": "^11.0.0",
+    "@material/typography": "^11.0.0",
+    "@smui/button": "^4.2.0",
+    "@smui/card": "^4.2.0",
+    "@smui/common": "^4.2.0",
+    "@smui/dialog": "^4.2.0",
+    "@smui/drawer": "^4.2.0",
+    "@smui/layout-grid": "^4.2.0",
+    "@smui/linear-progress": "^4.2.0",
+    "@smui/list": "^4.2.0",
     "axios": "^0.21.1",
-    "oidc-client": "^1.11.5"
+    "oidc-client": "^1.11.5",
+    "smui-theme": "^4.1.0"
   }
 }

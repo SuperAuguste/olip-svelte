@@ -12,11 +12,12 @@
 </script>
 
 <script>
-    import "../styles/index.scss";
-    import Nav from "$lib/Nav.svelte";
+    import Drawer, { AppContent, Content } from '@smui/drawer';
+    import List, { Item, Text } from '@smui/list';
 
     import { auth } from "$lib/auth";
     import { onMount } from "svelte";
+    import Nav from "$lib/Nav.svelte";
 
     onMount(async () => {
         await auth.onMount();
@@ -25,24 +26,32 @@
     export let navPath;
 </script>
 
-<div>
+<div class="top">
     <Nav path={navPath} />
-    <main>
-        <slot />
-    </main>
+
+    <AppContent class="app-content">
+        <main class="main-content">
+            <slot />
+        </main>
+    </AppContent>
 </div>
 
-<style>
-    div {
+<style lang="scss">
+    .top {
         display: flex;
-        overflow: hidden;
-
-        height: 100vh;
-        width: 100vw;
     }
 
-    main {
-        width: 100%;
+    * :global(.app-content) {
+        flex: auto;
         overflow: auto;
+        position: relative;
+        flex-grow: 1;
+    }
+ 
+    .main-content {
+        overflow: auto;
+        padding: 2.5em;
+        height: 100%;
+        box-sizing: border-box;
     }
 </style>

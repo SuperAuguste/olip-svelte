@@ -1,4 +1,14 @@
 <script context="module" lang="ts">
+    import LayoutGrid, { Cell } from "@smui/layout-grid";
+    import Card, {
+        Media,
+        MediaContent,
+        Actions,
+        ActionButtons
+    } from "@smui/card";
+
+    import Button, { Label } from "@smui/button";
+
     export interface CardButton {
         text: string,
         action: () => void,
@@ -15,7 +25,39 @@
     export var cards: Card[];
 </script>
 
-<div class="cards">
+<LayoutGrid style="padding: 0;">
+    {#each cards as card}
+        <Cell align="middle">
+            <div class="cell-content">
+                <Card>
+                    <Media class="applications-card-media" aspectRatio="16x9" style="--background-url: url('{card.thumbnail || 'http://70.167.220.187/img/application.afe7b9e3.png'}');">
+                        <MediaContent>
+                            <h2
+                                class="mdc-typography--headline4"
+                                style="color: #fff; position: absolute; bottom: 16px; left: 16px; margin: 0;"
+                            >
+                                {card.title}
+                            </h2>
+                        </MediaContent>
+                    </Media>
+                    {#if card.buttons}
+                        <Actions>
+                            <ActionButtons>
+                                {#each card.buttons as button}
+                                    <Button on:click={button.action}>
+                                        <Label>{button.text}</Label>
+                                    </Button>
+                                {/each}
+                            </ActionButtons>
+                        </Actions>
+                    {/if}
+                </Card>
+            </div>
+        </Cell>
+    {/each}
+</LayoutGrid>
+
+<!-- <div class="cards">
     {#each cards as card}
         <div
             style="--background-url: url('{card.thumbnail || 'http://70.167.220.187/img/application.afe7b9e3.png'}');"
@@ -31,68 +73,13 @@
             {/if}
         </div>
     {/each}
-</div>
+</div> -->
 
 <style type="text/scss">
-    .cards {
-        display: grid;
-
-        gap: 1rem;
-        grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
-
-        & > * {
-            position: relative;
-
-            border-radius: 3px;
-
-            min-height: 8rem;
-
-            cursor: pointer;
-            transition: 0.2s background-size;
-            background: linear-gradient(var(--cover-color), var(--cover-color)),
-                var(--background-url);
-            background-repeat: no-repeat;
-            background-size: cover;
-
-            padding: 1.5rem;
-
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            & > .title {
-                display: block;
-
-                color: var(--preview-text-color);
-                font-size: 1.5em;
-                font-weight: 700;
-            }
-
-            .buttons {
-                display: flex;
-                flex-direction: row;
-                flex-direction: row-reverse;
-
-                margin-top: auto;
-            }
-
-            button {
-                font-size: 0.75em;
-            }
-        }
-    }
-
-    button {
-        border: none;
-        border-radius: 3px;
-
-        padding: 0.6em 2.8em;
-
-        color: black;
-        font-size: 1em;
-        font-weight: 900;
-
-        cursor: pointer;
-        background-color: white;
+    :global(.applications-card-media) {
+        --cover-color: rgba(0, 0, 0, 0.75);
+        background: linear-gradient(var(--cover-color), var(--cover-color)), var(--background-url);
+        background-position: center;
+        background-size: cover;
     }
 </style>
