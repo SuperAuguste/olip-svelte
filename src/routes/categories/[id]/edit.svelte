@@ -21,6 +21,7 @@
     import Textfield from "@smui/textfield";
     import List, { Item, Meta, Label } from "@smui/list";
     import Checkbox from "@smui/checkbox";
+    import LinearProgress from "@smui/linear-progress";
 
     export let categoryId: string;
     let category: api.Category = null;
@@ -34,39 +35,39 @@
         for (let playlist of playlists) playlistsMap.push({label: playlist.title, value: playlist.id});
         playlistsMap = playlistsMap;
     });
-
-    // (await category).labels
 </script>
 
 <header>
-    <h2 class="section-title">Edit Category</h2>
+    <h2 class="mdc-typography--headline4">Edit Category</h2>
 </header>
 
 {#if category == null}
-    <p>Loading...</p>
+    <LinearProgress indeterminate />
 {:else}
     <div class="form">
         {#each Object.keys(category.labels) as label}
-            <Textfield bind:value={category.labels[label]} label="Label ({label})"></Textfield>
+            <div class="input-group">
+                <Textfield bind:value={category.labels[label]} label="Label ({label})"></Textfield>
+            </div>
         {/each}
 
         <div class="input-group">
-            <label for="tags">Tags</label>
+            <label class="mdc-typography--subtitle2">Tags</label>
             <TagInput bind:tags={category.tags} />
         </div>
 
-        <List checkList>
-            {#each playlistsMap as p}
-                <Item>
-                    <Label>{p.label}</Label>
-                    <Meta>
+        <div class="input-group">
+            <List checkList>
+                {#each playlistsMap as p}
+                    <Item>
                         <Checkbox bind:group={category.playlists} value={p.value} />
-                    </Meta>
-                </Item>
-            {/each}
-        </List>
+                        <Label>{p.label}</Label>
+                    </Item>
+                {/each}
+            </List>
+        </div>
 
-        <div class="buttons">
+        <div class="input-group">
             <Button color="secondary" on:click={() => {goto("/categories");}}>Cancel</Button>
             <Button variant="unelevated" on:click={async () => {
                 category = await api.updateCategory(categoryId, category);
@@ -79,7 +80,7 @@
 {/if}
 
 <style type="text/scss">
-    .buttons {
-        margin-top: 1rem;
+    .input-group {
+        margin-bottom: 1rem;
     }
 </style>
