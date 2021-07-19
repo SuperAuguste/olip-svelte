@@ -1,10 +1,16 @@
 import * as api from "./index";
 import type { Card } from "$lib/Cards.svelte";
+import { goto } from "$app/navigation";
+import axios from "axios";
 
 export function cardifyApplication(application: api.Application): Card {
     return {
         title: application.name,
-        thumbnail: application.links.find(_ => _.rel == api.Relationship.Picture).href
+        thumbnail: application.links.find(_ => _.rel == api.Relationship.Picture).href,
+        async action () {
+            const endp = await axios.get(application.links.find(_ => _.rel == api.Relationship.Endpoints).href);
+            goto(endp.data.data[0].url);
+        }
     };
 }
 

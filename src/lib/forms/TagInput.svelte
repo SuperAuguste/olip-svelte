@@ -1,14 +1,27 @@
 <script lang="ts">
+    import Button, { Group, GroupItem, Label, Icon } from '@smui/button';
+
     let newTag = "";
     export let tags: string[] = [];
 </script>
 
 <div>
     {#each tags as tag, index}
-        <span class="tag">{tag} <span class="remove" on:click={() => {
-            tags.splice(index, 1);
-            tags = tags;
-        }}>+</span></span>
+        <Group variant="raised" class="tag">
+            <Button on:click={() => clicked++} variant="raised">
+                <Label>{tag}</Label>
+            </Button>
+            <Button
+                on:click={() => {
+                    tags.splice(index, 1);
+                    tags = tags;
+                }}
+                variant="raised"
+                style="padding: 0; min-width: 36px;"
+            >
+                <Icon class="material-icons" style="margin: 0;">close</Icon>
+            </Button>
+        </Group>
     {/each}
 
     <input type="text" on:keypress={(event) => {
@@ -21,28 +34,7 @@
 </div>
 
 <style lang="scss">
-    .tag {
-        display: inline-block;
-
-        margin-right: 0.2em;
-
-        border: 2px solid black;
-        border-radius: 50px;
-
-        padding: 0.6em 1.4em;
-
-        font-weight: 600;
-
-        &>.remove {
-            display: inline-block;
-
-            margin-left: 0.2em;
-
-            line-height: 0.5em;
-
-            cursor: pointer;
-            transform: rotate(45deg);
-            vertical-align: middle;
-        }
+    :global(.tag) {
+        margin-right: 0.5rem;
     }
 </style>

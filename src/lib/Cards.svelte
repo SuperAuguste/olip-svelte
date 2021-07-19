@@ -4,7 +4,8 @@
         Media,
         MediaContent,
         Actions,
-        ActionButtons
+        ActionButtons,
+        PrimaryAction
     } from "@smui/card";
 
     import Button, { Label } from "@smui/button";
@@ -30,16 +31,18 @@
         <Cell align="middle">
             <div class="cell-content">
                 <Card>
-                    <Media class="applications-card-media" aspectRatio="16x9" style="--background-url: url('{card.thumbnail || 'http://70.167.220.187/img/application.afe7b9e3.png'}');">
-                        <MediaContent>
-                            <h2
-                                class="mdc-typography--headline4"
-                                style="color: #fff; position: absolute; bottom: 16px; left: 16px; margin: 0;"
-                            >
-                                {card.title}
-                            </h2>
-                        </MediaContent>
-                    </Media>
+                    <PrimaryAction on:click={card.action || (() => {})} ripple={!!card.action}>
+                        <Media class="applications-card-media" aspectRatio="16x9" style="--background-url: url('{card.thumbnail || 'http://70.167.220.187/img/application.afe7b9e3.png'}');">
+                            <MediaContent>
+                                <h2
+                                    class="mdc-typography--headline4"
+                                    style="color: #fff; position: absolute; bottom: 16px; left: 16px; margin: 0;"
+                                >
+                                    {card.title}
+                                </h2>
+                            </MediaContent>
+                        </Media>
+                    </PrimaryAction>
                     {#if card.buttons}
                         <Actions>
                             <ActionButtons>
